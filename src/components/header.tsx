@@ -5,7 +5,7 @@ function Header() {
     <header className='mb-8 flex flex-col items-center'>
       <a
         className='block mt-1 text-neutral-500'
-        href='https://github.com/mustafa-turk/where-next'
+        href='https://github.com/'
         target='_blank'
         rel='noreferrer'
       >
