@@ -9,7 +9,7 @@ function Footer() {
           rel='noreferrer'
           className='text-neutral-300'
         >
-          test
+          Appmuno
         </a>
       </span>
     </footer>
