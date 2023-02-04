@@ -5,7 +5,7 @@ function Footer() {
         Built by{" "}
         <a
           target='_blank'
-          href='https://mustafaturk.com'
+          href='https://appmuno.com'
           rel='noreferrer'
           className='text-neutral-300'
         >
