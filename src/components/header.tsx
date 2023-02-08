@@ -1,4 +1,4 @@
-import { TwitterIcon } from "./icon";
+import { GithubIcon } from "./icon";
 
 function Header() {
   return (
@@ -13,8 +13,8 @@ function Header() {
           className='button--primary w-auto text-sm mb-3 flex items-center gap-2'
           onClick={console.log}
         >
-          <TwitterIcon />
-          Tweet
+          <GithubIcon />
+          Star on GitHub
         </button>
       </a>
       <h1 className='font-black text-4xl text-white'>Where next?</h1>
