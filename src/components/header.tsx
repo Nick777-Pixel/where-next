@@ -15,7 +15,7 @@ function Header() {
           className='button--primary w-auto text-sm mb-3 flex items-center gap-2'
           onClick={console.log}
         >
-          <faTwitter />
+          <Githubicon />
           Star on GitHub
         </button>
       </a>
