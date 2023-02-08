@@ -1,4 +1,5 @@
 import { GithubIcon } from "./icon";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 function Header() {
   return (
