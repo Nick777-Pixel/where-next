@@ -1,6 +1,6 @@
 const title = "Where next?";
 const description = "AI will pick the top destinations for you!";
-const imgUrl = "https://www.wherenext.app/og.jpg";
+const imgUrl = "https://travelwise.vercel.app/og.jpg";
 
 function MetaTags() {
   return (
