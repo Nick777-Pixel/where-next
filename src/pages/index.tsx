@@ -19,8 +19,9 @@ import { ERR_MESSAGE_NOT_FOUND } from "@/utils/constants";
 
 export default function HomePage() {
   const [selectedCountryNames, setSelectedCountryNames] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState("");
-  const [searchText, setSearchText] = useState(""); // Added state for search text
+  const [workoutLevel, setWorkoutLevel] = useState("beginner"); // New state for workout level
+  const [workoutDuration, setWorkoutDuration] = useState(""); // New state for workout duration
+
   const {
     isLoading,
     mutate: generateSuggestions,
@@ -36,17 +37,41 @@ export default function HomePage() {
     if (isEmpty(selectedCountryNames)) {
       return toast("Please select at least one country");
     }
+    
+    // Generate workout plan based on dropdown value and text input
+    const workoutPlan = generateWorkoutPlan(workoutLevel, workoutDuration);
+    console.log(workoutPlan);
+    
     generateSuggestions();
   }
 
   function handleReset() {
     reset();
     setSelectedCountryNames([]);
-    setSearchText("");
+  }
+
+  // Function to generate workout plan based on dropdown value and text input
+  function generateWorkoutPlan(level, duration) {
+    let plan = "";
+    switch (level) {
+      case "beginner":
+        plan = `Beginner Workout Plan for ${duration} minutes:\n- Warm up with light stretches\n- Shadow boxing for 5 minutes\n- Jump rope for 10 minutes\n- Jab-cross combinations for 5 minutes\n- Basic footwork drills for 5 minutes\n- Cool down with stretching exercises`;
+        break;
+      case "intermediate":
+        plan = `Intermediate Workout Plan for ${duration} minutes:\n- Warm up with dynamic stretches\n- Shadow boxing for 10 minutes\n- Heavy bag work for 15 minutes\n- Speed bag drills for 10 minutes\n- Defensive drills for 10 minutes\n- Cool down with stretching exercises`;
+        break;
+      case "advanced":
+        plan = `Advanced Workout Plan for ${duration} minutes:\n- Warm up with cardio exercises\n- Shadow boxing for 15 minutes\n- Combination drills on heavy bag for 20 minutes\n- Sparring or focus mitt drills for 15 minutes\n- Advanced footwork drills for 10 minutes\n- Cool down with stretching exercises`;
+        break;
+      default:
+        plan = "Invalid workout level";
+        break;
+    }
+    return plan;
   }
 
   return (
-    <div className='py-4'>
+    <div className="py-4">
       <Head>
         <title>Where to go Next?</title>
         <MetaTags />
@@ -56,52 +81,51 @@ export default function HomePage() {
       <Header />
       <Banner />
 
-      <main className='p-4 max-w-xl mx-auto -mt-14'>
-        <AnimatePresence mode='popLayout'>
+      <main className="p-4 max-w-xl mx-auto -mt-14">
+        <AnimatePresence mode="popLayout">
           {isEmpty(suggestions) && (
             <AnimatedSection>
-              <h2 className='font-bold text-xl mb-3 text-white'>
+              <h2 className="font-bold text-xl mb-3 text-white">
                 Where have you already been?
               </h2>
-              <Select
-                onChange={setSelectedCountryNames}
-                isDisabled={isLoading}
-              />
-              <div className="my-4">
-                <label htmlFor="level" className="text-white">
-                  Select your level:
+              <Select onChange={setSelectedCountryNames} isDisabled={isLoading} />
+
+              <div className="mt-4">
+                <label htmlFor="workoutLevel" className="font-bold text-white">
+                  Workout Level:
                 </label>
                 <select
-                  id="level"
-                  className="block w-full mt-1 p-2 rounded-md bg-neutral-900 text-white"
-                  value={selectedLevel}
-                  onChange={(e) => setSelectedLevel(e.target.value)}
+                  id="workoutLevel"
+                  className="block w-full p-2 mt-1 rounded-md bg-white text-gray-800"
+                  value={workoutLevel}
+                  onChange={(e) => setWorkoutLevel(e.target.value)}
                 >
-                  <option value="">Select Level</option>
                   <option value="beginner">Beginner</option>
                   <option value="intermediate">Intermediate</option>
                   <option value="advanced">Advanced</option>
                 </select>
               </div>
-              <div className="my-4">
-                <label htmlFor="search" className="text-white">
-                  Search:
+
+              <div className="mt-4">
+                <label htmlFor="workoutDuration" className="font-bold text-white">
+                  Workout Duration (in minutes):
                 </label>
                 <input
                   type="text"
-                  id="search"
-                  className="block w-full mt-1 p-2 rounded-md bg-neutral-900 text-white"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
+                  id="workoutDuration"
+                  className="block w-full p-2 mt-1 rounded-md bg-white text-gray-800"
+                  value={workoutDuration}
+                  onChange={(e) => setWorkoutDuration(e.target.value)}
                 />
               </div>
+
               <button
                 onClick={handleFind}
-                className='button--primary flex justify-center'
+                className="button--primary flex justify-center mt-4"
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <span className='flex justify-center gap-1'>
+                  <span className="flex justify-center gap-1">
                     Finding Destinations <Loader />
                   </span>
                 ) : (
@@ -112,10 +136,10 @@ export default function HomePage() {
           )}
         </AnimatePresence>
 
-        <AnimatePresence mode='popLayout'>
+        <AnimatePresence mode="popLayout">
           {!isEmpty(suggestions) && (
             <AnimatedSection>
-              <h2 className='font-bold text-xl mb-3 text-white'>
+              <h2 className="font-bold text-xl mb-3 text-white">
                 Our top destinations for you are the following, have fun!
               </h2>
               <div>
@@ -124,22 +148,22 @@ export default function HomePage() {
                   return (
                     <div
                       key={index}
-                      className='bg-neutral-900 text-neutral-300 px-3 py-2 rounded-md my-3'
+                      className="bg-neutral-900 text-neutral-300 px-3 py-2 rounded-md my-3"
                     >
                       <span>{`${suggestion.emoji} ${suggestion.name}`}</span>
                       <a
-                        className='block mt-1 text-neutral-500'
-                        target='_blank'
+                        className="block mt-1 text-neutral-500"
+                        target="_blank"
                         href={suggestion.url}
-                        rel='noreferrer'
+                        rel="noreferrer"
                       >
-                        Ready more on Wikipedia &rarr;
+                        Read more on Wikipedia &rarr;
                       </a>
                     </div>
                   );
                 })}
               </div>
-              <button onClick={handleReset} className='button--primary'>
+              <button onClick={handleReset} className="button--primary">
                 Find again
               </button>
             </AnimatedSection>
