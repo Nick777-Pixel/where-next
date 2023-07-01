@@ -19,6 +19,7 @@ import { ERR_MESSAGE_NOT_FOUND } from "@/utils/constants";
 
 export default function HomePage() {
   const [selectedCountryNames, setSelectedCountryNames] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState(""); // Added state for selected level
   const {
     isLoading,
     mutate: generateSuggestions,
@@ -64,6 +65,22 @@ export default function HomePage() {
                 onChange={setSelectedCountryNames}
                 isDisabled={isLoading}
               />
+              <div className="my-4">
+                <label htmlFor="level" className="text-white">
+                  Select your level:
+                </label>
+                <select
+                  id="level"
+                  className="block w-full mt-1 p-2 rounded-md bg-neutral-900 text-white"
+                  value={selectedLevel}
+                  onChange={(e) => setSelectedLevel(e.target.value)}
+                >
+                  <option value="">Select Level</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+              </div>
               <button
                 onClick={handleFind}
                 className='button--primary flex justify-center'
