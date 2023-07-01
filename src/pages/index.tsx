@@ -19,7 +19,8 @@ import { ERR_MESSAGE_NOT_FOUND } from "@/utils/constants";
 
 export default function HomePage() {
   const [selectedCountryNames, setSelectedCountryNames] = useState([]);
-  const [selectedLevel, setSelectedLevel] = useState(""); // Added state for selected level
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [searchText, setSearchText] = useState(""); // Added state for search text
   const {
     isLoading,
     mutate: generateSuggestions,
@@ -41,6 +42,7 @@ export default function HomePage() {
   function handleReset() {
     reset();
     setSelectedCountryNames([]);
+    setSearchText("");
   }
 
   return (
@@ -80,6 +82,18 @@ export default function HomePage() {
                   <option value="intermediate">Intermediate</option>
                   <option value="advanced">Advanced</option>
                 </select>
+              </div>
+              <div className="my-4">
+                <label htmlFor="search" className="text-white">
+                  Search:
+                </label>
+                <input
+                  type="text"
+                  id="search"
+                  className="block w-full mt-1 p-2 rounded-md bg-neutral-900 text-white"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
               </div>
               <button
                 onClick={handleFind}
